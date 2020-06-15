@@ -3,7 +3,7 @@
 // @name            BaiduGoogleResultSwitcher
 // @namespace       https://github.com/NiaoBlush/BaiduGoogleSwitcher
 // @version         1.0
-// @description     切换百度谷歌搜索结果
+// @description     在百度中点击按钮以使用相同关键词在google搜索。在google中点击按钮以使用相同关键词在百度中搜索。
 // @author          NiaoBlush
 // @license         MIT
 // @grant           none
