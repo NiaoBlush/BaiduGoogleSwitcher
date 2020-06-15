@@ -16,38 +16,58 @@
 
     const switcherBtnId = "baidu-google-switcher-btn-id";
     const site = getCurrentSite();
-    console.log(site)
 
+    let parent;
+    let btnText;
+    let logoUrl;
+    if (site === "baidu") {
+        parent = document.getElementsByClassName("s_tab_inner")[0];
+        btnText = "Google一下";
+        logoUrl = "https://www.google.com/favicon.ico";
+    } else if (site === "google") {
+        parent = document.getElementsByTagName("g-header-menu")[1].parentElement;
+        btnText = "百度一下";
+        logoUrl = "https://www.baidu.com/favicon.ico";
+    }
 
-    // const urlParams = new URLSearchParams(window.location.search);
-    // const currentLang = urlParams.get("lr") || "en";
-    // const btnId = "btn-language-switcher";
-    //
-    let parent = document.getElementsByTagName("g-header-menu")[1].parentElement;
-    let className = parent.lastElementChild.className;
-    //
-    let button = document.createElement("a");
-    // button.innerText = currentLang === 'en' ? "lang_zh-CN" : "en";
-    button.className = className;
-    button.id = switcherBtnId;
-    const imgSize = 20;
-    button.innerText = "1"
-    // button.style.fontSize= `${imgSize}px`;
-    button.style.background = "url(https://www.google.com/favicon.ico) center no-repeat";
-    button.style.backgroundSize = `${imgSize}px ${imgSize}px`
+    createButton(parent, btnText, logoUrl);
 
+    /**
+     * 创建按钮并插入
+     * @param parent 父元素
+     * @param btnText 按钮文本
+     * @param logoUrl 图标url
+     */
+    function createButton(parent, btnText, logoUrl) {
+        const imgSize = 16;
 
-    // button.style.height = `${imgSize}px`;
-    // button.style.width = `${imgSize}px`;
-    // button.style.padding = "0px";
-    // button.style.position = "absolute"
-    // button.style.bottom = "5px";
-    // button.style.cursor = "hand";
+        let className = parent.lastElementChild.className;
+        let button = document.createElement("a");
+        button.className = className;
+        button.id = switcherBtnId;
+        button.style.width = "100px"
+        button.style.cursor = "pointer";
+        button.onclick = () => redirect();
 
-    // button.onclick = () => reload();
-    //
-    parent.appendChild(button);
+        let img = document.createElement("img");
+        img.src = logoUrl;
+        img.style.height = `${imgSize}px`;
+        img.style.width = `${imgSize}px`;
 
+        let text = document.createElement("span");
+        text.innerText = btnText;
+
+        if (logoUrl) {
+            button.appendChild(img);
+        }
+        button.appendChild(text);
+        parent.appendChild(button);
+    }
+
+    /**
+     * 获取当前网站
+     * @returns {string} baidu | google
+     */
     function getCurrentSite() {
         if (location.hostname.indexOf("baidu") > -1) {
             return "baidu";
@@ -58,6 +78,10 @@
         }
     }
 
+    /**
+     * 获取当前关键字
+     * @returns {string} 关键字
+     */
     function getKeyword() {
         const urlParams = new URLSearchParams(window.location.search);
         let keyword = "";
@@ -69,12 +93,16 @@
         return keyword;
     }
 
+    /**
+     * 重定向
+     */
     function redirect() {
-        document.getElementById(switcherBtnId).innerText = "reloading";
+        document.getElementById(switcherBtnId).innerText = "redirecting";
+        const urlParams = new URLSearchParams(window.location.search);
         let url = "";
-        if (site === "baidu") {
+        if (site === "google") {
             url = `https://www.baidu.com/s?wd=${getKeyword()}`;
-        } else if (site === "google") {
+        } else if (site === "baidu") {
             url = `https://www.google.com/search?q=${getKeyword()}`;
         }
         if (url) {
