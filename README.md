@@ -1,0 +1,2 @@
+# BaiduGoogleSwitcher
+切换Google与Baidu搜索结果
