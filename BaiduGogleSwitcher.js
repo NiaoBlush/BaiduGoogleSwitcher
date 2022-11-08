@@ -25,7 +25,7 @@
         btnText = "Google一下";
         logoUrl = "https://www.google.com/favicon.ico";
     } else if (site === "google") {
-        parent = document.getElementsByTagName("g-header-menu")[1].parentElement;
+        parent = document.getElementsByClassName("hdtb-mitem")[1].parentElement;
         btnText = "百度一下";
         logoUrl = "https://www.baidu.com/favicon.ico";
     }
